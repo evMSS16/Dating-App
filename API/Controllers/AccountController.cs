@@ -4,6 +4,7 @@ using API.Data;
 using API.DTOs;
 using API.Entities;
 using API.Interfaces;
+using API.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -61,21 +62,17 @@ public class AccountController : BaseApiController
             if (computedHash[i] != user.PasswordHash[i]) return Unauthorized("Invalid password");
         }
 
-        return new UserDto
-        {
-            Username = user.UserName,
-            Token = _tokenService.CreateToken(user)
-        };
+        var userToReturn = new UserDto();
+
+        userToReturn.Username = user.UserName;
+        userToReturn.Token = _tokenService.CreateToken(user);
+
+        return userToReturn;
+
     }
 
     private async Task<bool> UserExists(string username)
     {
         return await _context.Users.AnyAsync(x => x.UserName == username.ToLower());
     }
-}
-
-public class LoginDto
-{
-    internal string Username;
-    internal char[] Password;
 }

@@ -1,10 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-test-errors',
-  templateUrl: './test-error.component.html',
-  styleUrls: ['./test-error.component.css']
+  templateUrl: './test-errors.component.html',
+  styleUrls: ['./test-errors.component.css']
 })
 export class TestErrorsComponent implements OnInit {
   baseUrl = 'https://localhost:5001/api/';

@@ -11,13 +11,12 @@ import { User } from './_models/user';
 })
 export class AppComponent implements OnInit{
   title = 'Dating App';
-users: any;
+  users: any;
 
   constructor(private accountService: AccountService){}
   ngOnInit(): void {
     throw new Error('Method not implemented.');
   }
-
 
   setCurrentUser(){
     const userString = localStorage.getItem('user');

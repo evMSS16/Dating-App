@@ -1,16 +1,12 @@
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace API.DTOs
+namespace API.DTOs;
+
+public class RegisterDto
 {
-    public class RegisterDto
-    {
-        internal readonly char[] Password;
+    [Required]
+    public string Username { get; set; }
 
-        [Required]
-        public string UserName { get; internal set; }
-
-        [Required]
-        [StringLength(8, MinimumLength = 4)]
-        public string Username { get; internal set; }
-    }
+    [Required]
+    public string Password { get; set; }
 }

@@ -1,7 +1,4 @@
 import { AccountService } from '../_services/account.service';
-import { Observable, of } from 'rxjs';
-import { User } from '../_models/user';
-import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
@@ -14,7 +11,14 @@ export class RegisterComponent implements OnInit {
   @Output() cancelRegister = new EventEmitter();
   model: any = {};
 
-  constructor(private accountService: AccountService, private toastr: ToastrService) { }
+  bsInlineValue = new Date();
+  bsInlineRangeValue: Date[];
+  maxDate = new Date();
+
+  constructor(private accountService: AccountService, private toastr: ToastrService) {
+    this.maxDate.setDate(this.maxDate.getDate() + 7);
+    this.bsInlineRangeValue = [this.bsInlineValue, this.maxDate];
+   }
 
   ngOnInit(): void {
   }
@@ -31,7 +35,6 @@ export class RegisterComponent implements OnInit {
     });
   }
   
-
   cancel() {
     this.cancelRegister.emit(false)
   }
