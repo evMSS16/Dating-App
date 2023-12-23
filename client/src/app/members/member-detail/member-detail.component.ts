@@ -1,21 +1,24 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-//import { GalleryItem, GalleryModule, ImageItem } from 'ng-gallery';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { Member } from 'src/app/_models/member';
 import { MembersService } from 'src/app/_services/members.service';
+import { NgxGalleryAnimation, NgxGalleryImage, NgxGalleryModule, NgxGalleryOptions } from '@kolkov/ngx-gallery';
+import { TimeagoModule } from 'ngx-timeago';
 
 @Component({
   selector: 'app-member-detail',
   standalone: true,
   templateUrl: './member-detail.component.html',
   styleUrls: ['./member-detail.component.css'],
-  imports: [CommonModule, TabsModule]
+  imports: [CommonModule, TabsModule, NgxGalleryModule, TimeagoModule]
 })
+
 export class MemberDetailComponent implements OnInit {
-  member: Member | undefined;
-  images: GalleryItem[] = [];
+  member?: Member;
+  galleryOptions: NgxGalleryOptions[] = [];
+  galleryImages: NgxGalleryImage[] = [];
 
   constructor(private memberService: MembersService, private route: ActivatedRoute) { }
 
@@ -28,17 +31,23 @@ export class MemberDetailComponent implements OnInit {
     if (!username) return;
     this.memberService.getMember(username).subscribe({
       next: member => {
-        this.member = member,
-        this.getImages()
+        this.member = member;
+        this.galleryImages = this.getImages();
       }
     })
   }
 
   getImages() {
-    if (!this.member) return;
-    for (const photo of this.member?.photos) {
-      this.images.push(new ImageItem({src: photo.url, thumb: photo.url}));
+    if (!this.member) return [];
+    const imageUrls = [];
+    for (const photo of this.member.photos) {
+      imageUrls.push({
+        small: photo.url,
+        medium: photo.url,
+        big: photo.url
+      })
     }
+    return imageUrls;
   }
 
 }

@@ -1,8 +1,8 @@
 <div class="row" *ngIf="member">
     <div class="col-4">
         <div class="card">
-            <img src="{{member.photoUrl || './assets/user.png'}}" alt="{{member.knownAs}}"
-                class="card-img-top img-thumbnail">
+            <img src="{{member.photoUrl}}" alt="{{member.knownAs}}"
+                class="card-img-top img-thumbnail" *ngIf="member">
             <div class="card-body">
                 <div>
                     <strong>Location:</strong>
@@ -14,11 +14,11 @@
                 </div>
                 <div>
                     <strong>Last active:</strong>
-                    <p>{{member.lastActive}}</p>
+                    <p>{{member.lastActive + 'Z' | timeago }}</p>
                 </div>
                 <div>
                     <strong>Member since:</strong>
-                    <p>{{member.created}}</p>
+                    <p>{{member.created | date: 'dd MMM yyyy'}}</p>
                 </div>
             </div>
             <div class="card-footer">
@@ -42,7 +42,7 @@
                 <p>{{member.interests}}</p>
             </tab>
             <tab heading="Photos" #photoTab="tab">
-                <gallery *ngIf="photoTab.active" [items]="images" class="gallery"></gallery>
+                <ngx-gallery [options]="galleryOptions" [images]="galleryImages" class="ngx-gallery"></ngx-gallery>           
             </tab>
             <tab heading="Messages">
                 <p>Messages will go here</p>
