@@ -44,8 +44,8 @@
             <tab heading="Photos" #photoTab="tab">
                 <ngx-gallery [options]="galleryOptions" [images]="galleryImages" class="ngx-gallery"></ngx-gallery>           
             </tab>
-            <tab heading="Messages">
-                <p>Messages will go here</p>
+            <tab heading="Messages" (selectTab)="onTabActivated($event)">
+                <app-member-messages [username]="member.userName"></app-member-messages>
             </tab>
         </tabset>
     </div>
